@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PackingLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace PackingProblem
 {
     /// <summary>
@@ -24,12 +26,16 @@ namespace PackingProblem
         {
             InitializeComponent();
 
-            
+
         }
 
         private void onCalculateClick(object sender, RoutedEventArgs e)
         {
-            tb_output.Text = "Btn Calculate was clicked!";
+            string input = "Btn Calculate was clicked!";
+            tb_output.Text = input;
+
+            tb_output.Text = input + "\n" + input.StartsWithUpper();
+
         }
     }
 }
