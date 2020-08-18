@@ -1,47 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading;
+using System.Security.Cryptography.X509Certificates;
 
-namespace ConsoleAppPacking
+namespace PackingLibrary
 {
-    class Circle {
-
-        public int r;
-        public int d;
-        public double x;
-        public double y;
-        public bool initialized = false;
-
-        public Circle() {}
-
-        public Circle(int _r, int _d, double _x, double _y)
-        {
-            r = _r;
-            d = _d;
-            x = _x;
-            y = _y;
-            initialized = true;
-        }
-
-        public override string ToString()
-        {
-            return "Circle(" + x + ", " + y + ")";
-        }
-    }
-
-    class Program
+    public static class PackingCircles
     {
-
-        public static int r = 2;
-        public static int d = 1;
-        public static int x = 10;
-        public static int y = 8;
-
-        static void Main(string[] args)
+        public class Circle
         {
+
+            public int r;
+            public int d;
+            public double x;
+            public double y;
+            public bool initialized = false;
+
+            public Circle() { }
+
+            public Circle(int _r, int _d, double _x, double _y)
+            {
+                r = _r;
+                d = _d;
+                x = _x;
+                y = _y;
+                initialized = true;
+            }
+
+            public override string ToString()
+            {
+                return "Circle(" + x + ", " + y + ")";
+            }
+        }
+
+        static int r;
+        static int d;
+        static int x;
+        static int y;
+
+        public static List<Circle> Calculate(int radius, int circleDistance, int borderDistance, int width, int height)
+        {
+            r = radius;
+            d = circleDistance;
+            x = width - borderDistance * 2;
+            y = height - borderDistance * 2;
+
             int rowCount = 0;
             int circlesCount = 0;
+            List<Circle> allCircles = new List<Circle>();
 
             List<Circle> row = drawRow(0);
 
@@ -49,10 +55,11 @@ namespace ConsoleAppPacking
             {
                 rowCount++;
                 circlesCount += row.Count;
-            } 
+                allCircles.AddRange(row);
+            }
             else
             {
-                return;
+                return allCircles;
             }
 
             bool isEmpty = row.Count == 0;
@@ -70,7 +77,7 @@ namespace ConsoleAppPacking
                 if (row.Count == 0)
                 {
                     isEmpty = true;
-                } 
+                }
                 else
                 {
                     prevRow.Clear();
@@ -81,14 +88,17 @@ namespace ConsoleAppPacking
 
                     rowCount++;
                     circlesCount += row.Count;
+                    allCircles.AddRange(row);
                 }
             }
 
             Console.WriteLine(circlesCount);
 
+            return allCircles;
+
         }
 
-        static List<Circle> drawRow(int count, List<Circle> prevRow = null)
+        private static List<Circle> drawRow(int count, List<Circle> prevRow = null)
         {
 
             if (count % 2 == 0)
@@ -105,7 +115,7 @@ namespace ConsoleAppPacking
                 return drawOddRow(prevRow);
             }
 
-            
+
         }
 
         private static List<Circle> drawEvenRow(List<Circle> prevRow)
@@ -278,5 +288,20 @@ namespace ConsoleAppPacking
             if (IsSpace(currentCircle)) return currentCircle;
             else return null;
         }
+
+
+        public static bool StartsWithUpper(this String str)
+        {
+            Console.WriteLine("Checking if starts with upper letter...");
+
+            if (String.IsNullOrWhiteSpace(str))
+                return false;
+
+            Char ch = str[0];
+            return Char.IsUpper(ch);
+
+        }
+
+
     }
 }

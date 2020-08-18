@@ -9,5 +9,17 @@
     <Grid>
         <Button x:Name="btn_calculate" Content="Calculate" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="onCalculateClick"/>
         <TextBox x:Name="tb_output" HorizontalAlignment="Left" Margin="67,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="723" Height="74"/>
+        <Border x:Name="border" BorderThickness="3" BorderBrush="Black">
+            <Canvas x:Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+
+            </Canvas>
+
+        </Border>
+        <TextBox x:Name="tb_radius" HorizontalAlignment="Left" Margin="10,89,0,0" Text="40" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_circle_distance" HorizontalAlignment="Left" Margin="10,112,0,0" Text="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_border_distance" HorizontalAlignment="Left" Margin="10,135,0,0" Text="10" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_width" HorizontalAlignment="Left" Margin="10,158,0,0" Text="500" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tb_height" HorizontalAlignment="Left" Margin="10,181,0,0" Text="400" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>
