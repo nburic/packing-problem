@@ -5,22 +5,21 @@ using PackingLibrary;
 namespace PackingLibraryTest
 {
     [TestClass]
-    public class UnitTest1
+    public class PackingUnitTest
     {
         [TestMethod]
         public void TestGetNextCircleFirstRowFirstCircleHasSpace()
         {
-            PackingCircles.r = 10;
-            PackingCircles.d = 0;
-            PackingCircles.x = 500;
-            PackingCircles.y = 400;
-            PackingCircles.bd = 50;
+            PackingCircles.radius = 10;
+            PackingCircles.distanceBetweenCircles = 0;
+            PackingCircles.width = 500;
+            PackingCircles.height = 400;
+            PackingCircles.borderDistance = 50;
 
             PackingCircles.Circle expected = new PackingCircles.Circle(
-                PackingCircles.r = 10,
-                PackingCircles.d = 0,
-                60,
-                60);
+                PackingCircles.radius = 10,
+                PackingCircles.distanceBetweenCircles = 0,
+                new PointF(60, 60));
 
             PackingCircles.Circle result = PackingCircles.GetNextCircle(null);
 
@@ -30,11 +29,11 @@ namespace PackingLibraryTest
         [TestMethod]
         public void TestGetNextCircleFirstRowFirstCircleNoSpace()
         {
-            PackingCircles.r = 380;
-            PackingCircles.d = 0;
-            PackingCircles.x = 500;
-            PackingCircles.y = 400;
-            PackingCircles.bd = 50;
+            PackingCircles.radius = 380;
+            PackingCircles.distanceBetweenCircles = 0;
+            PackingCircles.width = 500;
+            PackingCircles.height = 400;
+            PackingCircles.borderDistance = 50;
 
             PackingCircles.Circle result = PackingCircles.GetNextCircle(null);
 
@@ -44,19 +43,18 @@ namespace PackingLibraryTest
         [TestMethod]
         public void TestGetNextCircleFirstCircleHasSpace()
         {
-            PackingCircles.r = 10;
-            PackingCircles.d = 0;
-            PackingCircles.x = 500;
-            PackingCircles.y = 400;
-            PackingCircles.bd = 50;
+            PackingCircles.radius = 10;
+            PackingCircles.distanceBetweenCircles = 0;
+            PackingCircles.width = 500;
+            PackingCircles.height = 400;
+            PackingCircles.borderDistance = 50;
 
-            const double yCoord = 120;
+            const float yCoord = 120;
 
             PackingCircles.Circle expected = new PackingCircles.Circle(
-                PackingCircles.r = 10,
-                PackingCircles.d = 0,
-                60,
-                yCoord);
+                PackingCircles.radius = 10,
+                PackingCircles.distanceBetweenCircles = 0,
+                new PointF(60, yCoord));
 
             PackingCircles.Circle result = PackingCircles.GetNextCircle(null, yCoord);
 
@@ -70,7 +68,7 @@ namespace PackingLibraryTest
             int x = 500;
             int y = 300;
 
-            PackingCircles.bd = 50;
+            PackingCircles.borderDistance = 50;
 
             PointF[] circleCenter = { 
                 new PointF(60, 60), 
@@ -84,16 +82,15 @@ namespace PackingLibraryTest
 
             for (int i = 0; i < radius.Length; i++)
             {
-                PackingCircles.r = radius[i];
-                PackingCircles.d = 0;
-                PackingCircles.x = x;
-                PackingCircles.y = y;
+                PackingCircles.radius = radius[i];
+                PackingCircles.distanceBetweenCircles = 0;
+                PackingCircles.width = x;
+                PackingCircles.height = y;
 
                 PackingCircles.Circle circle = new PackingCircles.Circle(
-                    PackingCircles.r,
-                    PackingCircles.d,
-                    circleCenter[i].X,
-                    circleCenter[i].Y);
+                    PackingCircles.radius,
+                    PackingCircles.distanceBetweenCircles,
+                    circleCenter[i]);
 
                 bool result = PackingCircles.IsSpace(circle);
 
@@ -120,16 +117,15 @@ namespace PackingLibraryTest
 
             for (int i = 0; i < radius.Length; i++)
             {
-                PackingCircles.r = radius[i];
-                PackingCircles.d = 0;
-                PackingCircles.x = x;
-                PackingCircles.y = y;
+                PackingCircles.radius = radius[i];
+                PackingCircles.distanceBetweenCircles = 0;
+                PackingCircles.width = x;
+                PackingCircles.height = y;
 
                 PackingCircles.Circle circle = new PackingCircles.Circle(
-                    PackingCircles.r,
-                    PackingCircles.d,
-                    circleCenter[i].X,
-                    circleCenter[i].Y);
+                    PackingCircles.radius,
+                    PackingCircles.distanceBetweenCircles,
+                    circleCenter[i]);
 
                 bool result = PackingCircles.IsSpace(circle);
 

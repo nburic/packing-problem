@@ -64,8 +64,8 @@ namespace PackingProblem
                 ellipse.Stroke = blackBrush;
                 ellipse.StrokeThickness = 1;
 
-                Canvas.SetLeft(ellipse, c.x - circleRadius);
-                Canvas.SetTop(ellipse, c.y - circleRadius);
+                Canvas.SetLeft(ellipse, c.coords.X - circleRadius);
+                Canvas.SetTop(ellipse, c.coords.Y - circleRadius);
 
                 canvas.Children.Add(ellipse);
             }

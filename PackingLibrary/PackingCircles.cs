@@ -1,63 +1,24 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Security.Cryptography.X509Certificates;
 
 namespace PackingLibrary
 {
-    public static class PackingCircles
+    public static partial class PackingCircles
     {
-        public class Circle
+        public static int radius;
+        public static int distanceBetweenCircles;
+        public static int width;
+        public static int height;
+        public static int borderDistance;
+
+        public static List<Circle> Calculate(int radius, int distanceBetweenCircles, int borderDistance, int width, int height)
         {
-
-            public int r;
-            public int d;
-            public double x;
-            public double y;
-            public bool initialized = false;
-
-            public Circle() { }
-
-            public Circle(int _r, int _d, double _x, double _y)
-            {
-                r = _r;
-                d = _d;
-                x = _x;
-                y = _y;
-                initialized = true;
-            }
-
-            public override string ToString()
-            {
-                return "Circle(" + x + ", " + y + ")";
-            }
-
-            public override bool Equals(object obj)
-            {
-                var circle = obj as Circle;
-
-                return circle != null &&
-                    circle.r == r &&
-                    circle.d == d &&
-                    circle.x == x &&
-                    circle.y == y;                    
-            }
-        }
-
-        public static int r;
-        public static int d;
-        public static int x;
-        public static int y;
-        public static int bd;
-
-        public static List<Circle> Calculate(int radius, int circleDistance, int borderDistance, int width, int height)
-        {
-            r = radius;
-            d = circleDistance;
-            x = width;
-            y = height;
-            bd = borderDistance;
+            PackingCircles.radius = radius;
+            PackingCircles.distanceBetweenCircles = distanceBetweenCircles;
+            PackingCircles.width = width;
+            PackingCircles.height = height;
+            PackingCircles.borderDistance = borderDistance;
 
             int rowCount = 0;
             int circlesCount = 0;
@@ -145,7 +106,7 @@ namespace PackingLibrary
                 Circle topCircle = CalculateTopCircle(prevRow[0]);
                 if (topCircle != null)
                 {
-                    currentCircle = GetNextCircle(null, topCircle.y);
+                    currentCircle = GetNextCircle(null, topCircle.coords.Y);
                 }
             }
 
@@ -154,17 +115,7 @@ namespace PackingLibrary
                 row.Add(currentCircle);
             }
 
-            while (currentCircle != null)
-            {
-                currentCircle = GetNextCircle(currentCircle);
-
-                if (currentCircle != null)
-                {
-                    row.Add(currentCircle);
-                }
-            }
-
-            return row;
+            return AddCirclesToRow(row, currentCircle);
         }
 
         private static List<Circle> drawOddRow(List<Circle> prevRow)
@@ -180,6 +131,11 @@ namespace PackingLibrary
 
             row.Add(currentCircle);
 
+            return AddCirclesToRow(row, currentCircle);
+        }
+
+        private static List<Circle> AddCirclesToRow(List<Circle> row, Circle currentCircle)
+        {
             while (currentCircle != null)
             {
                 currentCircle = GetNextCircle(currentCircle);
@@ -193,25 +149,24 @@ namespace PackingLibrary
             return row;
         }
 
-        public static Circle GetNextCircle(Circle prevCircle, double yCoord = 0, bool checkSpace = true)
+        public static Circle GetNextCircle(Circle prevCircle, float yCoord = 0, bool checkSpace = true)
         {
+            // first circle in row
             if (prevCircle == null)
             {
                 Circle c;
+                switch(yCoord)
+                {
+                    case 0:
+                        c = new Circle(radius, distanceBetweenCircles, new PointF(radius + borderDistance, radius + borderDistance));
+                        break;
+                    default:
+                        c = new Circle(radius, distanceBetweenCircles, new PointF(radius + borderDistance, yCoord));
+                        break;
+                }
 
-                if (yCoord == 0)
-                {
-                    c = new Circle(r, d, r + bd, r + bd);
-                }
-                else
-                {
-                    c = new Circle(r, d, r + bd, yCoord);
-                }
+                if (IsSpace(c)) return c;
 
-                if (IsSpace(c))
-                {
-                    return c;
-                }
                 return null;
             }
             else
@@ -219,31 +174,22 @@ namespace PackingLibrary
                 Circle c = new Circle(
                     prevCircle.r,
                     prevCircle.d,
-                    prevCircle.x + prevCircle.r + prevCircle.d + prevCircle.r,
-                    prevCircle.y
-                    );
+                    new PointF(prevCircle.coords.X + prevCircle.r + prevCircle.d + prevCircle.r, prevCircle.coords.Y));
 
-                if (!checkSpace)
-                {
-                    return c;
-                }
+                if (!checkSpace || IsSpace(c)) return c;
 
-                if (IsSpace(c))
-                {
-                    return c;
-                }
                 return null;
             }
         }
 
         public static bool IsSpace(Circle circle)
         {
-            double right = circle.x + circle.r;
-            double left = circle.x - circle.r;
-            double top = circle.y + circle.r;
-            double bottom = circle.y - circle.r;
+            double right = circle.coords.X + circle.r;
+            double left = circle.coords.X - circle.r;
+            double top = circle.coords.Y + circle.r;
+            double bottom = circle.coords.Y - circle.r;
 
-            if (left < bd || right > x - bd || bottom < bd || top > y - bd)
+            if (left < borderDistance || right > width - borderDistance || bottom < borderDistance || top > height - borderDistance)
             {
                 return false;
             }
@@ -259,37 +205,32 @@ namespace PackingLibrary
 
         private static Circle CalculateTopCircle(Circle firstCircle, bool checkSpace = true)
         {
+            // get possible adjacent circle without checking for actual space
             Circle secondCircle = GetNextCircle(firstCircle, 0, false);
 
             if (secondCircle == null) return null;
 
+            // side of the triangle
+            // sqrt((x2 - x1)2 + (y2 - y1)2)
+            double a = Math.Sqrt(Math.Pow(secondCircle.coords.X - firstCircle.coords.X, 2) + Math.Pow(secondCircle.coords.Y - firstCircle.coords.Y, 2));
+
             // v = a * sqrt(3) / 2
-
-            double a = Math.Sqrt(Math.Pow(secondCircle.x - firstCircle.x, 2) + Math.Pow(secondCircle.y - firstCircle.y, 2));
-
-            // (second.x - firstCircle.x).toDouble().pow(2.toDouble()) +
-            // (second.y - firstCircle.y).toDouble().pow(2.toDouble()))
-
-            //     println(a)
-
-            double v = GetTriangleHeight(a);
+            float v = (float)GetTriangleHeight(a);
 
             PointF midPoint = new PointF(
-                Convert.ToSingle((firstCircle.x + secondCircle.x) / 2),
-                Convert.ToSingle((firstCircle.y + secondCircle.y) / 2)
+                Convert.ToSingle((firstCircle.coords.X + secondCircle.coords.X) / 2),
+                Convert.ToSingle((firstCircle.coords.Y + secondCircle.coords.Y) / 2)
                 );
 
             Circle currentCircle = new Circle(
                 firstCircle.r,
                 firstCircle.d,
-                midPoint.X,
-                midPoint.Y + v
+                new PointF(midPoint.X, midPoint.Y + v)
                 );
 
-            if (!checkSpace) return currentCircle;
+            if (!checkSpace || IsSpace(currentCircle)) return currentCircle;
 
-            if (IsSpace(currentCircle)) return currentCircle;
-            else return null;
+            return null;
         }
     }
 }
