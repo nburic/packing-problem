@@ -33,17 +33,19 @@ namespace PackingLibrary
             }
         }
 
-        static int r;
-        static int d;
-        static int x;
-        static int y;
+        public static int r;
+        public static int d;
+        public static int x;
+        public static int y;
+        public static int bd;
 
         public static List<Circle> Calculate(int radius, int circleDistance, int borderDistance, int width, int height)
         {
             r = radius;
             d = circleDistance;
-            x = width - borderDistance * 2;
-            y = height - borderDistance * 2;
+            x = width;
+            y = height;
+            bd = borderDistance;
 
             int rowCount = 0;
             int circlesCount = 0;
@@ -91,8 +93,6 @@ namespace PackingLibrary
                     allCircles.AddRange(row);
                 }
             }
-
-            Console.WriteLine(circlesCount);
 
             return allCircles;
 
@@ -152,13 +152,6 @@ namespace PackingLibrary
                 }
             }
 
-            Console.WriteLine("---------------------------------------------");
-            foreach (Circle c in row)
-            {
-                Console.Write(c + " ");
-            }
-            Console.WriteLine();
-
             return row;
         }
 
@@ -185,16 +178,10 @@ namespace PackingLibrary
                 }
             }
 
-            Console.WriteLine("---------------------------------------------");
-            foreach (Circle c in row)
-            {
-                Console.Write(c + " ");
-            }
-            Console.WriteLine();
             return row;
         }
 
-        private static Circle GetNextCircle(Circle prevCircle, double yCoord = 0, bool checkSpace = true)
+        public static Circle GetNextCircle(Circle prevCircle, double yCoord = 0, bool checkSpace = true)
         {
             if (prevCircle == null)
             {
@@ -202,11 +189,11 @@ namespace PackingLibrary
 
                 if (yCoord == 0)
                 {
-                    c = new Circle(r, d, r, r);
+                    c = new Circle(r, d, r + bd, r + bd);
                 }
                 else
                 {
-                    c = new Circle(r, d, r, yCoord);
+                    c = new Circle(r, d, r + bd, yCoord);
                 }
 
                 if (IsSpace(c))
@@ -220,7 +207,7 @@ namespace PackingLibrary
                 Circle c = new Circle(
                     prevCircle.r,
                     prevCircle.d,
-                    prevCircle.x + prevCircle.r + d + r,
+                    prevCircle.x + prevCircle.r + prevCircle.d + prevCircle.r,
                     prevCircle.y
                     );
 
@@ -237,28 +224,30 @@ namespace PackingLibrary
             }
         }
 
-        private static bool IsSpace(Circle circle)
+        public static bool IsSpace(Circle circle)
         {
             double right = circle.x + circle.r;
+            double left = circle.x - circle.r;
             double top = circle.y + circle.r;
+            double bottom = circle.y - circle.r;
 
-            if (right > x || top > y)
+            if (left < bd || right > x - bd || bottom < bd || top > y - bd)
             {
                 return false;
             }
             return true;
         }
 
-        private static double GetTriangleHeight(double distance)
+        public static double GetTriangleHeight(double distance)
         {
-            return distance * Math.Sqrt(3) / 2;
+            return Math.Floor(distance * Math.Sqrt(3) / 2);
         }
 
         private static Circle CalculateTopCircle(Circle firstCircle, bool checkSpace = true)
         {
             Circle secondCircle = GetNextCircle(firstCircle, 0, false);
 
-            if (!secondCircle.initialized) return null;
+            if (secondCircle == null) return null;
 
             // v = a * sqrt(3) / 2
 
@@ -288,20 +277,5 @@ namespace PackingLibrary
             if (IsSpace(currentCircle)) return currentCircle;
             else return null;
         }
-
-
-        public static bool StartsWithUpper(this String str)
-        {
-            Console.WriteLine("Checking if starts with upper letter...");
-
-            if (String.IsNullOrWhiteSpace(str))
-                return false;
-
-            Char ch = str[0];
-            return Char.IsUpper(ch);
-
-        }
-
-
     }
 }

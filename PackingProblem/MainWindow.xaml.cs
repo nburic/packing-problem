@@ -33,28 +33,25 @@ namespace PackingProblem
         {
             tb_output.Text = "";
             canvas.Children.Clear();
-
-            string input = "Btn Calculate was clicked!";
-            tb_output.Text = input;
-
-            tb_output.Text = input + "\n" + input.StartsWithUpper() +"\n";
+            canvas.Visibility = Visibility.Visible;
 
             int circleRadius = Convert.ToInt32(tb_radius.Text.ToString());
             int borderDistance = Convert.ToInt32(tb_border_distance.Text.ToString());
+            int circleDistance = Convert.ToInt32(tb_circle_distance.Text.ToString());
+            int width = Convert.ToInt32(tb_width.Text.ToString());
+            int height = Convert.ToInt32(tb_height.Text.ToString());
+
+            canvas.Width = width;
+            canvas.Height = height;
 
             List<PackingCircles.Circle> circles = PackingCircles.Calculate(
-                Convert.ToInt32(tb_radius.Text.ToString()), 
-                Convert.ToInt32(tb_circle_distance.Text.ToString()), 
-                Convert.ToInt32(tb_border_distance.Text.ToString()),
-                Convert.ToInt32(tb_width.Text.ToString()),
-                Convert.ToInt32(tb_height.Text.ToString()));
+                circleRadius,
+                circleDistance,
+                borderDistance,
+                width,
+                height);
 
             tb_output.Text += circles.Count.ToString() + "\n";
-
-            border.Width = Convert.ToInt32(tb_width.Text.ToString());
-            border.Height = Convert.ToInt32(tb_height.Text.ToString());
-            canvas.Width = Convert.ToInt32(tb_width.Text.ToString());
-            canvas.Height = Convert.ToInt32(tb_height.Text.ToString());
 
             foreach (PackingCircles.Circle c in circles)
             {
@@ -67,8 +64,8 @@ namespace PackingProblem
                 ellipse.Stroke = blackBrush;
                 ellipse.StrokeThickness = 1;
 
-                Canvas.SetLeft(ellipse, c.x - circleRadius + borderDistance / 2);
-                Canvas.SetTop(ellipse, c.y - circleRadius + borderDistance / 2);
+                Canvas.SetLeft(ellipse, c.x - circleRadius);
+                Canvas.SetTop(ellipse, c.y - circleRadius);
 
                 canvas.Children.Add(ellipse);
             }
