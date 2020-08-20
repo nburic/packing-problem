@@ -20,7 +20,7 @@ namespace PackingLibrary
 
             public override string ToString()
             {
-                return "Circle(" + coords.X + ", " + coords.Y + ")";
+                return coords.ToString();
             }
 
             public override bool Equals(object obj)

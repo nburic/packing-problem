@@ -1,17 +1,9 @@
 ﻿using PackingLibrary;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 
@@ -25,8 +17,6 @@ namespace PackingProblem
         public MainWindow()
         {
             InitializeComponent();
-
-
         }
 
         private void onCalculateClick(object sender, RoutedEventArgs e)
@@ -35,11 +25,11 @@ namespace PackingProblem
             canvas.Children.Clear();
             canvas.Visibility = Visibility.Visible;
 
-            int circleRadius = Convert.ToInt32(tb_radius.Text.ToString());
-            int borderDistance = Convert.ToInt32(tb_border_distance.Text.ToString());
-            int circleDistance = Convert.ToInt32(tb_circle_distance.Text.ToString());
-            int width = Convert.ToInt32(tb_width.Text.ToString());
-            int height = Convert.ToInt32(tb_height.Text.ToString());
+            int circleRadius = Convert.ToInt32(tb_radius.Text);
+            int borderDistance = Convert.ToInt32(tb_border_distance.Text);
+            int circleDistance = Convert.ToInt32(tb_circle_distance.Text);
+            int width = Convert.ToInt32(tb_width.Text);
+            int height = Convert.ToInt32(tb_height.Text);
 
             canvas.Width = width;
             canvas.Height = height;
@@ -55,20 +45,30 @@ namespace PackingProblem
 
             foreach (PackingCircles.Circle c in circles)
             {
-                tb_output.Text += c.ToString() + " ";
-                Ellipse ellipse = new Ellipse();
-                ellipse.Width = circleRadius * 2;
-                ellipse.Height = circleRadius * 2;
-                SolidColorBrush blackBrush = new SolidColorBrush();
-                blackBrush.Color = Colors.Black;
-                ellipse.Stroke = blackBrush;
-                ellipse.StrokeThickness = 1;
+                Ellipse ellipse = createEllipse(c);
 
-                Canvas.SetLeft(ellipse, c.coords.X - circleRadius);
-                Canvas.SetTop(ellipse, c.coords.Y - circleRadius);
+                tb_output.Text += c.ToString() + " ";
 
                 canvas.Children.Add(ellipse);
             }
+        }
+
+        private Ellipse createEllipse(PackingCircles.Circle c)
+        {
+            Ellipse ellipse = new Ellipse();
+
+            SolidColorBrush blackBrush = new SolidColorBrush();
+            blackBrush.Color = Colors.Black;
+
+            ellipse.Width = c.r * 2;
+            ellipse.Height = c.r * 2;
+            ellipse.Stroke = blackBrush;
+            ellipse.StrokeThickness = 1;
+
+            Canvas.SetLeft(ellipse, c.coords.X - c.r);
+            Canvas.SetTop(ellipse, c.coords.Y - c.r);
+
+            return ellipse;
         }
     }
 }
