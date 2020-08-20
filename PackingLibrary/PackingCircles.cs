@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Security.Cryptography.X509Certificates;
@@ -30,6 +31,17 @@ namespace PackingLibrary
             public override string ToString()
             {
                 return "Circle(" + x + ", " + y + ")";
+            }
+
+            public override bool Equals(object obj)
+            {
+                var circle = obj as Circle;
+
+                return circle != null &&
+                    circle.r == r &&
+                    circle.d == d &&
+                    circle.x == x &&
+                    circle.y == y;                    
             }
         }
 
@@ -240,6 +252,8 @@ namespace PackingLibrary
 
         public static double GetTriangleHeight(double distance)
         {
+            if (distance < 0) return 0;
+
             return Math.Floor(distance * Math.Sqrt(3) / 2);
         }
 
