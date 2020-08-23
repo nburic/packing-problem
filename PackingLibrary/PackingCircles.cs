@@ -14,6 +14,11 @@ namespace PackingLibrary
 
         public static List<Circle> Calculate(int radius, int distanceBetweenCircles, int borderDistance, int width, int height)
         {
+            if (radius <= 0 || width <= 0 || height <= 0)
+            {
+                throw new ArgumentException("Arguments should be greater than 0.");
+            }
+
             PackingCircles.radius = radius;
             PackingCircles.distanceBetweenCircles = distanceBetweenCircles;
             PackingCircles.width = width;

@@ -34,12 +34,21 @@ namespace PackingProblem
             canvas.Width = width;
             canvas.Height = height;
 
-            List<PackingCircles.Circle> circles = PackingCircles.Calculate(
-                circleRadius,
-                circleDistance,
-                borderDistance,
-                width,
-                height);
+            List<PackingCircles.Circle> circles;
+
+            try
+            {
+                circles = PackingCircles.Calculate(
+                    circleRadius,
+                    circleDistance,
+                    borderDistance,
+                    width,
+                    height);
+
+            } catch (Exception ex) {
+                tb_output.Text = ex.Message;
+                return;
+            }
 
             tb_output.Text += circles.Count.ToString() + "\n";
 
