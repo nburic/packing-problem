@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackingProblem", "PackingProblem.csproj", "{4A3474DA-305D-47B3-9F59-EE2479729C29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackingGUI", "PackingGUI.csproj", "{4A3474DA-305D-47B3-9F59-EE2479729C29}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackingLibrary", "..\PackingLibrary\PackingLibrary.csproj", "{856FD9B4-FC87-405A-B558-1193E515F168}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackingLibraryTest", "..\PackingLibraryTest\PackingLibraryTest.csproj", "{64294301-5798-4BE3-B001-1F72F56CA1A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackingLibraryTest", "..\PackingLibraryTest\PackingLibraryTest.csproj", "{64294301-5798-4BE3-B001-1F72F56CA1A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
