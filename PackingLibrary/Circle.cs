@@ -5,11 +5,10 @@ namespace PackingLibrary
 {
     public static partial class PackingCircles
     {
-        public class Circle
+        public class Circle : Shape
         {
             public int r;
             public int d;
-            public PointF coords;
 
             public Circle(int _r, int _d, PointF _coords)
             {
@@ -18,9 +17,9 @@ namespace PackingLibrary
                 coords = _coords;
             }
 
-            public override string ToString()
+            public override float Area()
             {
-                return coords.ToString();
+                return (float)Math.PI * (float)Math.Pow(r, 2);
             }
 
             public override bool Equals(object obj)
