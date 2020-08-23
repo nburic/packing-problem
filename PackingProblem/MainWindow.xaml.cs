@@ -25,11 +25,32 @@ namespace PackingProblem
             canvas.Children.Clear();
             canvas.Visibility = Visibility.Visible;
 
-            int circleRadius = Convert.ToInt32(tb_radius.Text);
-            int borderDistance = Convert.ToInt32(tb_border_distance.Text);
-            int circleDistance = Convert.ToInt32(tb_circle_distance.Text);
-            int width = Convert.ToInt32(tb_width.Text);
-            int height = Convert.ToInt32(tb_height.Text);
+            int circleRadius;
+            int borderDistance;
+            int circleDistance;
+            int width;
+            int height;
+
+            try
+            {
+                circleRadius = Convert.ToInt32(tb_radius.Text);
+                borderDistance = Convert.ToInt32(tb_border_distance.Text);
+                circleDistance = Convert.ToInt32(tb_circle_distance.Text);
+                width = Convert.ToInt32(tb_width.Text);
+                height = Convert.ToInt32(tb_height.Text);
+            } 
+            catch (Exception ex)
+            {
+                tb_output.Text = ex.Message;
+                return;
+            }
+            
+            if (height > width)
+            {
+                tb_output.Text = "Width has to be greater than height for optimal solution.";
+                return;
+            }
+             
 
             canvas.Width = width;
             canvas.Height = height;
@@ -50,19 +71,20 @@ namespace PackingProblem
                 return;
             }
 
-            tb_output.Text += circles.Count.ToString() + "\n";
+            tb_output.Text += "Number of circles: " + circles.Count.ToString() + "\n";
+            tb_output.Text += "Coordinates:\n";
 
             foreach (PackingCircles.Circle c in circles)
             {
-                Ellipse ellipse = createEllipse(c);
+                Ellipse ellipse = createEllipse(c, height);
 
-                tb_output.Text += c.ToString() + " ";
+                tb_output.Text += c.ToString() + "\n";
 
                 canvas.Children.Add(ellipse);
             }
         }
 
-        private Ellipse createEllipse(PackingCircles.Circle c)
+        private Ellipse createEllipse(PackingCircles.Circle c, int areaHeight)
         {
             Ellipse ellipse = new Ellipse();
 
@@ -75,7 +97,7 @@ namespace PackingProblem
             ellipse.StrokeThickness = 1;
 
             Canvas.SetLeft(ellipse, c.coords.X - c.r);
-            Canvas.SetTop(ellipse, c.coords.Y - c.r);
+            Canvas.SetTop(ellipse, areaHeight - c.coords.Y - c.r);
 
             return ellipse;
         }

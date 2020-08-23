@@ -5,16 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PackingProblem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Packing Circles" Height="500" Width="800" WindowState="Maximized" ResizeMode="NoResize">
     <Grid>
-        <Button x:Name="btn_calculate" Content="Calculate" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="onCalculateClick"/>
-        <TextBox x:Name="tb_output" HorizontalAlignment="Left" Margin="67,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="723" Height="74"/>
-        <Canvas x:Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Blue" Visibility="Collapsed">
-        </Canvas>
-        <TextBox x:Name="tb_radius" HorizontalAlignment="Left" Margin="10,89,0,0" Text="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tb_circle_distance" HorizontalAlignment="Left" Margin="10,112,0,0" Text="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tb_border_distance" HorizontalAlignment="Left" Margin="10,135,0,0" Text="50" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tb_width" HorizontalAlignment="Left" Margin="10,158,0,0" Text="500" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="tb_height" HorizontalAlignment="Left" Margin="10,181,0,0" Text="400" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+        
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="tb_output" Margin="20" />
+        <Canvas Grid.Row="1" Grid.Column="1" x:Name="canvas" Background="AntiqueWhite" Margin="20" />
+
+        <StackPanel Orientation="Vertical" Grid.RowSpan="2" Grid.Column="0">
+
+            <DockPanel LastChildFill="True" Margin="0,10,0,10">
+                <TextBlock Text="Circle radius:" Margin="5" />
+                <TextBox x:Name="tb_radius" Width="Auto"/>
+            </DockPanel>
+
+            <DockPanel LastChildFill="True" Margin="0,10,0,10">
+                <TextBlock Text="Distance between circles:" Margin="5" />
+                <TextBox x:Name="tb_circle_distance" Width="Auto"/>
+            </DockPanel>
+
+            <DockPanel LastChildFill="True" Margin="0,10,0,10">
+                <TextBlock Text="Border distance:" Margin="5" />
+                <TextBox x:Name="tb_border_distance" Width="Auto"/>
+            </DockPanel>
+
+            <DockPanel LastChildFill="True" Margin="0,10,0,10">
+                <TextBlock Text="Area width:" Margin="5" />
+                <TextBox x:Name="tb_width" Width="Auto"/>
+            </DockPanel>
+
+            <DockPanel LastChildFill="True" Margin="0,10,0,10">
+                <TextBlock Text="Area height:" Margin="5" />
+                <TextBox x:Name="tb_height" Width="Auto"/>
+            </DockPanel>
+
+            <Button x:Name="btn_calculate" Content="Calculate" Click="onCalculateClick" Margin="10"/>
+
+        </StackPanel>
+       
     </Grid>
 </Window>
