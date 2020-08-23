@@ -12,7 +12,6 @@ namespace PackingLibraryTest
         {
             PackingCircles.radius = 10;
             PackingCircles.distanceBetweenCircles = 0;
-            PackingCircles.width = 500;
             PackingCircles.height = 400;
             PackingCircles.borderDistance = 50;
 
@@ -31,7 +30,6 @@ namespace PackingLibraryTest
         {
             PackingCircles.radius = 380;
             PackingCircles.distanceBetweenCircles = 0;
-            PackingCircles.width = 500;
             PackingCircles.height = 400;
             PackingCircles.borderDistance = 50;
 
@@ -45,7 +43,6 @@ namespace PackingLibraryTest
         {
             PackingCircles.radius = 10;
             PackingCircles.distanceBetweenCircles = 0;
-            PackingCircles.width = 500;
             PackingCircles.height = 400;
             PackingCircles.borderDistance = 50;
 
@@ -65,7 +62,6 @@ namespace PackingLibraryTest
         public void TestIsSpaceTrue()
         {
             int[] radius = { 10, 0, 5, 100, 20, 40, 50 };
-            int x = 500;
             int y = 300;
 
             PackingCircles.borderDistance = 50;
@@ -84,7 +80,6 @@ namespace PackingLibraryTest
             {
                 PackingCircles.radius = radius[i];
                 PackingCircles.distanceBetweenCircles = 0;
-                PackingCircles.width = x;
                 PackingCircles.height = y;
 
                 PackingCircles.Circle circle = new PackingCircles.Circle(
@@ -103,7 +98,6 @@ namespace PackingLibraryTest
         public void TestIsSpaceFalse()
         {
             int[] radius = { 10, 0, 5, 100, 20, 40, 50 };
-            int x = 500;
             int y = 300;
             PointF[] circleCenter = {
                 new PointF(0, 0),
@@ -119,7 +113,6 @@ namespace PackingLibraryTest
             {
                 PackingCircles.radius = radius[i];
                 PackingCircles.distanceBetweenCircles = 0;
-                PackingCircles.width = x;
                 PackingCircles.height = y;
 
                 PackingCircles.Circle circle = new PackingCircles.Circle(

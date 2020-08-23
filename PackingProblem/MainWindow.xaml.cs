@@ -28,7 +28,6 @@ namespace PackingProblem
             int circleRadius;
             int borderDistance;
             int circleDistance;
-            int width;
             int height;
 
             try
@@ -36,7 +35,6 @@ namespace PackingProblem
                 circleRadius = Convert.ToInt32(tb_radius.Text);
                 borderDistance = Convert.ToInt32(tb_border_distance.Text);
                 circleDistance = Convert.ToInt32(tb_circle_distance.Text);
-                width = Convert.ToInt32(tb_width.Text);
                 height = Convert.ToInt32(tb_height.Text);
             } 
             catch (Exception ex)
@@ -45,14 +43,14 @@ namespace PackingProblem
                 return;
             }
             
-            if (height > width)
+            if (height > PackingCircles.width)
             {
                 tb_output.Text = "Width has to be greater than height for optimal solution.";
                 return;
             }
              
 
-            canvas.Width = width;
+            canvas.Width = PackingCircles.width;
             canvas.Height = height;
 
             List<PackingCircles.Circle> circles;
@@ -63,7 +61,6 @@ namespace PackingProblem
                     circleRadius,
                     circleDistance,
                     borderDistance,
-                    width,
                     height);
 
             } catch (Exception ex) {

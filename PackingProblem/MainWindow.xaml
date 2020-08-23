@@ -22,6 +22,8 @@
 
         <StackPanel Orientation="Vertical" Grid.RowSpan="2" Grid.Column="0">
 
+            <TextBlock Text="Enter dimensions in millimeters:" Margin="5,10,0,10"/>
+
             <DockPanel LastChildFill="True" Margin="0,10,0,10">
                 <TextBlock Text="Circle radius:" Margin="5" />
                 <TextBox x:Name="tb_radius" Width="Auto"/>
@@ -38,14 +40,11 @@
             </DockPanel>
 
             <DockPanel LastChildFill="True" Margin="0,10,0,10">
-                <TextBlock Text="Area width:" Margin="5" />
-                <TextBox x:Name="tb_width" Width="Auto"/>
-            </DockPanel>
-
-            <DockPanel LastChildFill="True" Margin="0,10,0,10">
                 <TextBlock Text="Area height:" Margin="5" />
                 <TextBox x:Name="tb_height" Width="Auto"/>
             </DockPanel>
+
+            <TextBlock Text="Width is 1m (1000mm)" Margin="5,10,0,10" />
 
             <Button x:Name="btn_calculate" Content="Calculate" Click="onCalculateClick" Margin="10"/>
 

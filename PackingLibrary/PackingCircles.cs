@@ -8,20 +8,19 @@ namespace PackingLibrary
     {
         public static int radius;
         public static int distanceBetweenCircles;
-        public static int width;
+        public const int width = 1000;
         public static int height;
         public static int borderDistance;
 
-        public static List<Circle> Calculate(int radius, int distanceBetweenCircles, int borderDistance, int width, int height)
+        public static List<Circle> Calculate(int radius, int distanceBetweenCircles, int borderDistance, int height)
         {
-            if (radius <= 0 || width <= 0 || height <= 0)
+            if (radius <= 0 || height <= 0)
             {
                 throw new ArgumentException("Arguments should be greater than 0.");
             }
 
             PackingCircles.radius = radius;
             PackingCircles.distanceBetweenCircles = distanceBetweenCircles;
-            PackingCircles.width = width;
             PackingCircles.height = height;
             PackingCircles.borderDistance = borderDistance;
 
